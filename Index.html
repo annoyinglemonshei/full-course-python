@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Python Underground — Full Course</title>
+
+    <!-- Pixel-style font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #050505;
+            color: #ffffff;
+            font-family: "VT323", monospace;
+            font-size: 21px;
+            line-height: 1.5;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+
+            background:
+                radial-gradient(circle at center, #161616 0%, #070707 55%, #000000 100%);
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+
+            background-size: 40px 40px;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .hero {
+            max-width: 900px;
+        }
+
+        .heart {
+            color: #ff3030;
+            font-size: 60px;
+            animation: heartbeat 1.2s infinite;
+            margin-bottom: 30px;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.18);
+            }
+        }
+
+        .hero h1 {
+            font-family: "Press Start 2P", monospace;
+            font-size: clamp(25px, 5vw, 55px);
+            line-height: 1.5;
+            text-shadow: 4px 4px 0 #000;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #55ff55;
+        }
+
+        .hero p {
+            font-size: 28px;
+            color: #cccccc;
+        }
+
+        .start-btn {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 15px 30px;
+            border: 3px solid #ffffff;
+            color: white;
+            text-decoration: none;
+            font-family: "Press Start 2P";
+            font-size: 12px;
+            transition: 0.2s;
+        }
+
+        .start-btn:hover {
+            background: white;
+            color: black;
+            transform: translateY(-4px);
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            background: rgba(0,0,0,0.95);
+            border-bottom: 2px solid #333;
+
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            margin: 0 12px;
+            font-size: 20px;
+        }
+
+        nav a:hover {
+            color: #55ff55;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            padding-bottom: 100px;
+        }
+
+        section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            font-family: "Press Start 2P";
+            font-size: 20px;
+            color: #55ff55;
+            margin-bottom: 40px;
+        }
+
+        .section-title::before {
+            content: "> ";
+            color: #ffffff;
+        }
+
+        /* =========================
+           LESSON CARDS
+        ========================= */
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson {
+            border: 2px solid #444;
+            padding: 25px;
+            background: #0c0c0c;
+            transition: 0.2s;
+        }
+
+        .lesson:hover {
+            border-color: #55ff55;
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(85,255,85,0.12);
+        }
+
+        .lesson h3 {
+            color: #ffff55;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .lesson p {
+            color: #bbb;
+        }
+
+        /* =========================
+           CODE BOX
+        ========================= */
+
+        .code-box {
+            background: #020202;
+            border: 2px solid #333;
+            margin: 25px 0;
+            padding: 25px;
+            overflow-x: auto;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        pre {
+            font-family: "VT323", monospace;
+            font-size: 22px;
+            color: #55ff55;
+        }
+
+        .comment {
+            color: #666;
+        }
+
+        .keyword {
+            color: #ff55ff;
+        }
+
+        .string {
+            color: #ffff55;
+        }
+
+        .function {
+            color: #55ffff;
+        }
+
+        /* =========================
+           TERMINAL
+        ========================= */
+
+        .terminal {
+            background: #000;
+            border: 3px solid #777;
+            padding: 25px;
+            box-shadow: 8px 8px 0 #222;
+        }
+
+        .terminal-top {
+            color: #777;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .terminal-line {
+            margin: 8px 0;
+        }
+
+        .terminal-line span {
+            color: #55ff55;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #080808;
+        }
+
+        th,
+        td {
+            border: 1px solid #444;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            color: #ffff55;
+        }
+
+        td {
+            color: #ccc;
+        }
+
+        /* =========================
+           QUIZ
+        ========================= */
+
+        .quiz {
+            border: 2px solid #444;
+            padding: 30px;
+            background: #0b0b0b;
+        }
+
+        .quiz button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 14px;
+
+            background: #050505;
+            color: white;
+            border: 2px solid #555;
+
+            font-family: "VT323";
+            font-size: 22px;
+            text-align: left;
+
+            cursor: pointer;
+        }
+
+        .quiz button:hover {
+            border-color: #ffff55;
+            color: #ffff55;
+        }
+
+        #result {
+            margin-top: 20px;
+            color: #55ff55;
+            font-size: 25px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 2px solid #222;
+            color: #666;
+        }
+
+        footer span {
+            color: #ff3030;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+            nav a {
+                display: inline-block;
+                margin: 5px;
+                font-size: 17px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .hero p {
+                font-size: 23px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <header id="home">
+
+        <div class="hero">
+
+            <div class="heart">♥</div>
+
+            <h1>
+                PYTHON<br>
+                <span>UNDERGROUND</span>
+            </h1>
+
+            <p>
+                a complete beginner's journey into Python
+            </p>
+
+            <a href="#course" class="start-btn">
+                [ BEGIN ]
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
+
+    <nav>
+
+        <a href="#course">COURSE</a>
+        <a href="#syntax">SYNTAX</a>
+        <a href="#loops">LOOPS</a>
+        <a href="#functions">FUNCTIONS</a>
+        <a href="#quiz">QUIZ</a>
+
+    </nav>
+
+
+    <main>
+
+        <!-- =========================
+             COURSE
+        ========================= -->
+
+        <section id="course">
+
+            <h2 class="section-title">
+                THE JOURNEY
+            </h2>
+
+            <div class="lesson-grid">
+
+                <div class="lesson">
+                    <h3>01 — Basics</h3>
+                    <p>
+                        Learn variables, data types, print statements,
+                        and the basic structure of Python.
+                    </p>
+                </div>
+
+                <div class="lesson">
+                    <h3>02 — Conditions</h3>
+                    <p>
+                        Make your programs think using
+                        if, elif, and else.
+                    </p>
+                </div>
+
+                <div class="lesson">
+                    <h3>03 — Loops</h3>
+                    <p>
+                        Repeat actions using for loops
+                        and while loops.
+                    </p>
+                </div>
+
+                <div class="lesson">
+                    <h3>04 — Functions</h3>
+                    <p>
+                        Create reusable blocks of code
+                        using functions.
+                    </p>
+                </div>
+
+                <div class="lesson">
+                    <h3>05 — Lists</h3>
+                    <p>
+                        Store multiple values inside
+                        lists and manipulate them.
+                    </p>
+                </div>
+
+                <div class="lesson">
+                    <h3>06 — Objects</h3>
+                    <p>
+                        Introduction to classes,
+                        objects, and OOP.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SYNTAX
+        ========================= -->
+
+        <section id="syntax">
+
+            <h2 class="section-title">
+                FIRST ENCOUNTER — SYNTAX
+            </h2>
+
+            <p>
+                Python is designed to be readable.
+                Let's start with the classic first program.
+            </p>
+
+            <div class="code-box">
+
+<pre>
+<span class="keyword">print</span>(<span class="string">"Hello, World!"</span>)
+</pre>
+
+            </div>
+
+            <p>
+                The <b>print()</b> function displays something
+                on the screen.
+            </p>
+
+            <br>
+
+            <h3>Variables</h3>
+
+            <div class="code-box">
+
+<pre>
+name = <span class="string">"Frisk"</span>
+level = 1
+hp = 20
+
+<span class="keyword">print</span>(name)
+<span class="keyword">print</span>(level)
+<span class="keyword">print</span>(hp)
+</pre>
+
+            </div>
+
+            <h3>Common Data Types</h3>
+
+            <br>
+
+            <table>
+
+                <tr>
+                    <th>Type</th>
+                    <th>Example</th>
+                </tr>
+
+                <tr>
+                    <td>String</td>
+                    <td>"hello"</td>
+                </tr>
+
+                <tr>
+                    <td>Integer</td>
+                    <td>42</td>
+                </tr>
+
+                <tr>
+                    <td>Float</td>
+                    <td>3.14</td>
+                </tr>
+
+                <tr>
+                    <td>Boolean</td>
+                    <td>True / False</td>
+                </tr>
+
+            </table>
+
+        </section>
+
+
+        <!-- =========================
+             CONDITIONS
+        ========================= -->
+
+        <section>
+
+            <h2 class="section-title">
+                CHOICE — CONDITIONS
+            </h2>
+
+            <p>
+                Programs can make decisions using conditions.
+            </p>
+
+            <div class="code-box">
+
+<pre>
+hp = 20
+
+<span class="keyword">if</span> hp &gt; 0:
+    <span class="keyword">print</span>(<span class="string">"You are still standing."</span>)
+<span class="keyword">else</span>:
+    <span class="keyword">print</span>(<span class="string">"Game Over."</span>)
+</pre>
+
+            </div>
+
+            <p>
+                Python uses indentation to determine
+                which code belongs inside a condition.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             LOOPS
+        ========================= -->
+
+        <section id="loops">
+
+            <h2 class="section-title">
+                ENDLESS CORRIDOR — LOOPS
+            </h2>
+
+            <h3>For Loop</h3>
+
+            <div class="code-box">
+
+<pre>
+<span class="keyword">for</span> i <span class="keyword">in</span> range(5):
+    <span class="keyword">print</span>(<span class="string">"You moved."</span>)
+</pre>
+
+            </div>
+
+            <h3>While Loop</h3>
+
+            <div class="code-box">
+
+<pre>
+hp = 3
+
+<span class="keyword">while</span> hp &gt; 0:
+    <span class="keyword">print</span>(<span class="string">"Still alive."</span>)
+    hp -= 1
+</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FUNCTIONS
+        ========================= -->
+
+        <section id="functions">
+
+            <h2 class="section-title">
+                SPECIAL ATTACK — FUNCTIONS
+            </h2>
+
+            <p>
+                Functions let you create reusable pieces of code.
+            </p>
+
+            <div class="code-box">
+
+<pre>
+<span class="keyword">def</span> <span class="function">greet</span>(name):
+
+    <span class="keyword">return</span> <span class="string">"Hello, "</span> + name
+
+
+message = greet(<span class="string">"Player"</span>)
+
+<span class="keyword">print</span>(message)
+</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             LISTS
+        ========================= -->
+
+        <section>
+
+            <h2 class="section-title">
+                INVENTORY — LISTS
+            </h2>
+
+            <div class="code-box">
+
+<pre>
+inventory = [
+    <span class="string">"Bandage"</span>,
+    <span class="string">"Notebook"</span>,
+    <span class="string">"Monster Candy"</span>
+]
+
+<span class="keyword">print</span>(inventory[0])
+
+inventory.append(<span class="string">"Potion"</span>)
+</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             TERMINAL
+        ========================= -->
+
+        <section>
+
+            <h2 class="section-title">
+                THE TERMINAL
+            </h2>
+
+            <div class="terminal">
+
+                <div class="terminal-top">
+                    PYTHON TERMINAL
+                </div>
+
+                <div class="terminal-line">
+                    <span>></span> python
+                </div>
+
+                <div class="terminal-line">
+                    <span>></span> print("Hello, human.")
+                </div>
+
+                <div class="terminal-line">
+                    Hello, human.
+                </div>
+
+                <div class="terminal-line">
+                    <span>></span> print(2 + 3)
+                </div>
+
+                <div class="terminal-line">
+                    5
+                </div>
+
+                <div class="terminal-line">
+                    <span>></span> _
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             QUIZ
+        ========================= -->
+
+        <section id="quiz">
+
+            <h2 class="section-title">
+                FINAL ENCOUNTER — QUIZ
+            </h2>
+
+            <div class="quiz">
+
+                <h3>
+                    What does print() do in Python?
+                </h3>
+
+                <br>
+
+                <button onclick="answer(false)">
+                    A. Deletes a variable
+                </button>
+
+                <button onclick="answer(true)">
+                    B. Displays information
+                </button>
+
+                <button onclick="answer(false)">
+                    C. Creates a loop
+                </button>
+
+                <button onclick="answer(false)">
+                    D. Closes Python
+                </button>
+
+                <div id="result"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            made for learning Python.
+        </p>
+
+      <p>
+        – all by thirdy
+      </p> 
+      
+        <p>
+            <span>♥</span> SAVE YOUR PROGRESS
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        function answer(correct) {
+
+            const result = document.getElementById("result");
+
+            if (correct) {
+
+                result.textContent =
+                    "♥ Correct. You gained EXP!";
+
+            } else {
+
+                result.textContent =
+                    "✕ Not quite. Try again.";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
